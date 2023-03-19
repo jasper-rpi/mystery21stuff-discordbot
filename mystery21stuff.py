@@ -158,6 +158,11 @@ addlause - lisab lause
         restricted_channels = rest_channels.read().splitlines()
         await message.channel.send('kanal on removeitud')
         print(restricted_channels)
+    elif "ekre" in message.content:
+        ekre_open = open('EKRE.txt', 'r')
+        ekre_read = ekre_open.read()
+        await message.channel.send(ekre_read)
+        ekre_open.close()
     else:
         rest_channels = open(rest_chan, 'r+')
         restricted_channels = rest_channels.read().splitlines()
