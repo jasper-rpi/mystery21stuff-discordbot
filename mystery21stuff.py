@@ -3,10 +3,10 @@ import random
 import secrets
 import discord
 import asyncio
+import ast
 from time import sleep
 
-intents = discord.Intents.default()
-intents.message_content = True
+intents = discord.Intents.all()
 
 client = discord.Client(intents=intents)
 
@@ -21,7 +21,11 @@ nool = 'nool.txt'
 
 rest_chan = 'rest_chan.txt'
 
-
+async def get_message_history(user_id, channel):
+    user = await client.fetch_user(user_id)
+    async for message in channel.history(limit=200):
+        if message.author == user or message.author == client.user:
+            await channel.send(f'{message.created_at}: {message.author}: {message.content}')
 
 
 @client.event
@@ -38,6 +42,7 @@ async def on_message(message):
         return
 
     elif message.content.startswith('$math'):
+        global tehe
         await message.channel.send('mathing:nerd:')
         sleep(2)
         message_content = message.content
@@ -47,7 +52,17 @@ async def on_message(message):
         elif mesg_con == "me+your mom":
             tehe = "your dad"
         else:
-            tehe = eval(mesg_con)
+#             tehe = ast.parse(str(mesg_con), mode='eval')
+            try:
+                tehee = ast.parse(str(mesg_con), mode='eval')
+            except SyntaxError:
+                return    # not a Python expression
+            if not all(isinstance(node, (ast.Expression,
+                    ast.UnaryOp, ast.unaryop,
+                    ast.BinOp, ast.operator,
+                    ast.Num)) for node in ast.walk(tehee)):
+                return    # not a mathematical expression (numbers and operators)
+            tehe = eval(compile(tehee, filename='', mode='eval'))
         tehet = (str(mesg_con) + "=" + str(tehe))
         print(tehet)
         await message.channel.send(tehet)
@@ -64,7 +79,6 @@ async def on_message(message):
         score = opnscr.read()
         await message.channel.send(score)
         opnscr.close()
-        scoor = ''
     elif message.content.startswith('$meth'):
         await message.channel.send('mething :100:')
         sleep(1)
@@ -158,6 +172,11 @@ addlause - lisab lause
         restricted_channels = rest_channels.read().splitlines()
         await message.channel.send('kanal on removeitud')
         print(restricted_channels)
+    elif message.content.startswith('$history'):
+        user_id = message.content.replace('$history ', '')  # replace with the user ID you want to retrieve the message history from
+        channel = message.channel
+        await get_message_history(user_id, channel)
+
     elif "ekre" in message.content:
         ekre_open = open('EKRE.txt', 'r')
         ekre_read = ekre_open.read()
