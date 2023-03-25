@@ -208,31 +208,6 @@ async def history(ctx, user_id: str):
     channel = ctx.channel
     await get_message_history(user_id, channel)
         
-        
-
-    
-#     elif "ekre" in ctx:
-#         ekre_open = open('EKRE.txt', 'r')
-#         ekre_read = ekre_open.read()
-#         await ctx.channel.send(ekre_read)
-#         ekre_open.close()
-#     elif "EKRE" in ctx:
-#         ekre_open = open('EKRE.txt', 'r')
-#         ekre_read = ekre_open.read()
-#         await ctx.channel.send(ekre_read)
-#         ekre_open.close()
-#     else:
-#         rest_channels = open(rest_chan, 'r+')
-#         restricted_channels = rest_channels.read().splitlines()
-#         if str(ctx.channel.id) in restricted_channels:
-#             return  # Exit the function without sending a ctx
-# 
-#         # If the ctx is not in a restricted channel, continue with normal behavior
-#         filee = open(laused, 'r')
-#         lause = filee.read().splitlines()
-#         await ctx.channel.send(random.choice(lause))
-#         filee.close()
-#         rest_channels.close()
-        
+     
 
 bot.run(TOKEN)
