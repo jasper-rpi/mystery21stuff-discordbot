@@ -11,7 +11,7 @@ import json
 
 intents = discord.Intents.all()
 
-bot = commands.Bot(command_prefix="$", intents=intents, activity = discord.Game(name = 'your great-grandfather'))
+bot = commands.Bot(command_prefix="$", intents=intents, activity = discord.Game(name = 'idk, some game ig'))
 
 opentoken = open("token.txt", 'r')
 TOKEN = opentoken.read()
@@ -49,19 +49,19 @@ async def on_message(message):
         return
     
 
-    if "ekre" in message.content:
+    if "ekre" in message.content: #"Mind nonda kuumaks kutab E K R E"
         ekre_open = open('EKRE.txt', 'r')
         ekre_read = ekre_open.read()
         await message.channel.send(ekre_read)
         ekre_open.close()
         return
-    if "EKRE" in message.content:
+    if "EKRE" in message.content: #"Mind nonda kuumaks kutab E K R E"
         ekre_open = open('EKRE.txt', 'r')
         ekre_read = ekre_open.read()
         await message.channel.send(ekre_read)
         ekre_open.close()
         return
-    if "lappa kotte" in message.content:
+    if "lappa kotte" in message.content: #see bot ei lappa kotte
         await message.channel.send("ma ei lappa kotte")
         return
     if not message.content.startswith(bot.command_prefix): # check if the message is not a command
@@ -79,11 +79,10 @@ async def on_message(message):
         await message.channel.send(random_lause)
 
         rest_channels.close()
-    else:
-        try:
-            await bot.process_commands(message)
-        except Exception as e:
-            await message.channel.send("""vale command tumba.
+    try:
+        await bot.process_commands(message)
+    except Exception as e:
+        await message.channel.send("""vale command tumba.
 Error: {e}""")
     
 
@@ -123,6 +122,7 @@ async def score(ctx, mesag_con: int):
     openscore.close()
     opnscr = open(file,"r+")
     scoree = opnscr.read()
+    print(scoree)
     await ctx.channel.send(scoree)
     opnscr.close()
     
@@ -189,19 +189,22 @@ async def kaheksapall(ctx, kusimus: str):
 async def nool(ctx, noolarv: int):
     fliec = open(noolfail, 'w')
     fliec.close()
-    for l in range(noolarv):
-        noollength = random.randint(1, 101)
-        fileeee = open(noolfail, 'a+')
-        for k in range(noollength):
-            fileeee.write('-')
-        fileeee.write(">")
-        fileeee.close()
-        fileeeee = open(noolfail, 'r')
-        await ctx.channel.send(fileeeee.read())
-        print(fileeeee.read())
-        fileeee.close()
-        filew = open(noolfail, 'w')
-        filew.close()
+    if noolarv < 101:
+        for l in range(noolarv):
+            noollength = random.randint(1, 101)
+            fileeee = open(noolfail, 'a+')
+            for k in range(noollength):
+                fileeee.write('-')
+            fileeee.write(">")
+            fileeee.close()
+            fileeeee = open(noolfail, 'r')
+            await ctx.channel.send(fileeeee.read())
+            print(fileeeee.read())
+            fileeee.close()
+            filew = open(noolfail, 'w')
+            filew.close()
+    else:
+        await ctx.channel.send("liiga palju nooli, proovi kuni 100")
         
         
 @bot.command(help='kasutu')
