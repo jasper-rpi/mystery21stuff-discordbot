@@ -82,12 +82,12 @@ async def on_message(message):
     try:
         await bot.process_commands(message)
     except Exception as e:
-        await message.channel.send("""vale command tumba.
-Error: {e}""")
+        await message.channel.send("""vale command tumba. Error: {e}""")
     
 
 @bot.command(help='teeb matemaatikat')
-async def math(ctx, ekvatsioon: str):
+async def math(ctx, *eekvatsioon):
+    ekvatsioon = "".join(eekvatsioon)
     await ctx.channel.send('mathing:nerd:')
     await asyncio.sleep(1)
     mesg_con = ctx.message.content.replace('$math ', '')
@@ -107,7 +107,7 @@ async def math(ctx, ekvatsioon: str):
             return    # not a mathematical expression (numbers and operators)
         tehe = eval(compile(tehee, filename='', mode='eval'))
     tehet = (str(mesg_con) + "=" + str(tehe))
-    print(tehet)
+    print(tehe)
     await ctx.channel.send(tehet)
     
     
